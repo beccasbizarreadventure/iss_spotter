@@ -45,4 +45,19 @@ const fetchCoordsByIP = (ip, callbackGeo) => {
   });
 };
 
-module.exports = { fetchMyIP, fetchCoordsByIP };
+const fetchISSFlyOverTimes = (coords, callbackFly) => {
+  const lat = coords.latitude;
+  const long = coords.longitude;
+  const locationToCheck = `https://iss-flyover.herokuapp.com/json/?lat=${lat}&lon=${long}`;
+  request(locationToCheck, function(error, response, body) {
+    if (error) {
+      callbackFly(error, null);
+      return;
+    }
+    const data = JSON.parse(body);
+    callbackFly(null, data.response);
+    return;
+  });
+};
+
+module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes };
