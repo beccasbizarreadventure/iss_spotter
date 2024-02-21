@@ -18,4 +18,31 @@ const fetchMyIP = (callbackIP) => {
   });
 };
 
-module.exports = { fetchMyIP };
+
+
+const fetchCoordsByIP = (ip, callbackGeo) => {
+  let coordSet = {};
+  const coords = `http://ipwho.is/${ip}`;
+  request(coords, function(error, response, body) {
+    if (error) {
+      callbackGeo(error, null);
+      return;
+    }
+    if (response.statusCode !== 200) {
+      const errorMsg = "Invalid HTTP response";
+      callbackGeo(Error(errorMsg), null);
+      return;
+    }
+    const data = JSON.parse(body);
+    if (data["message"] === "Invalid IP address") {
+      callbackGeo(Error(`${ip} is an invalid IP address`), null);
+      return;
+    }
+    coordSet.latitude = data.latitude;
+    coordSet.longitude = data.longitude;
+    callbackGeo(null, coordSet);
+    return;
+  });
+};
+
+module.exports = { fetchMyIP, fetchCoordsByIP };
