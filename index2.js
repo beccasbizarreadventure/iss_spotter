@@ -9,8 +9,8 @@ const printPassTimes = function(passTimes) {
   }
 };
 
-// passTimes is imported w the nextISSTimesForMyLocation 
-// formatted in correct format by printPassTimes 
+// passTimes is imported w the nextISSTimesForMyLocation
+// formatted in correct format by printPassTimes
 
 nextISSTimesForMyLocation()
   .then((passTimes) => {
@@ -19,4 +19,4 @@ nextISSTimesForMyLocation()
   .catch((error) => {
     console.log("It didn't work: ", error.message);
   });
-// format like above for error handling 
+// format like above for error handling

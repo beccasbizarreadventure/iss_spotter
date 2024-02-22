@@ -9,25 +9,25 @@ const fetchMyIP = function() {
   return request('https://api.ipify.org?format=json');
 };
 
-const fetchCoordsByIP = function (body) {
+const fetchCoordsByIP = function(body) {
   const IP = JSON.parse(body).ip;
   return request(`http://ipwho.is/${IP}`);
 };
 
-const fetchISSFlyOverTimes = function (body) {
+const fetchISSFlyOverTimes = function(body) {
   const lat = JSON.parse(body).latitude;
   const long = JSON.parse(body).longitude;
   return request(`https://iss-flyover.herokuapp.com/json/?lat=${lat}&lon=${long}`);
 };
 
-const nextISSTimesForMyLocation = function () {
+const nextISSTimesForMyLocation = function() {
   return fetchMyIP()
-  //returns IP from fecthMyIP 
-  .then(fetchCoordsByIP)
-  .then(fetchISSFlyOverTimes)
-  .then((data) => {
-    const { response } = JSON.parse(data);
-    return response;
-  })
-}
+  //returns IP from fecthMyIP
+    .then(fetchCoordsByIP)
+    .then(fetchISSFlyOverTimes)
+    .then((data) => {
+      const { response } = JSON.parse(data);
+      return response;
+    });
+};
 module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation };
